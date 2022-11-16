@@ -27,7 +27,8 @@
   "main": "./out/extension.js",
   "activationEvents": [
     "onStartupFinished",
-    "onView:vsc-postman-side"
+    "onView:vsc-postman-side",
+    "onView:testViewDragAndDrop"
   ],
   "contributes": {
     "configuration": {
@@ -101,7 +102,11 @@
         {
           "id": "vsc-postman-side",
           "name": "History"
-        }
+        },
+        {
+					"id": "testViewDragAndDrop",
+					"name": "Test View Drag and Drop"
+				}
       ]
     },
     "viewsContainers": {

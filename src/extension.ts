@@ -1,7 +1,8 @@
-import { commands, ExtensionContext, window } from "vscode";
+import { commands, DataTransferItem, ExtensionContext, window } from "vscode";
 import { RequestPanel } from "./panels/RequestPanel";
 import { handleHistoryItemClick, handleHistoryItemDelete, handleHistoryItemNewWindow, handleHistoryRefresh, handleHistoryUpload, handlePostmanNew } from "./panels/history";
 import { SideProvider } from "./panels/side";
+import { TestViewDragAndDrop } from "./panels/testViewDragAndDrop";
 
 export function activate(context: ExtensionContext) {
   // // Create the show gallery command
@@ -23,4 +24,10 @@ export function activate(context: ExtensionContext) {
   context.subscriptions.push(commands.registerCommand('vscPostmanHistory.delete', handleHistoryItemDelete));
   context.subscriptions.push(commands.registerCommand('vscPostmanHistory.refresh', handleHistoryRefresh));
   context.subscriptions.push(commands.registerCommand('vscPostmanHistory.upload', handleHistoryUpload));
+
+  // Drag and Drop proposed API sample
+  // This check is for older versions of VS Code that don't have the most up-to-date tree drag and drop API proposal.
+  if (typeof DataTransferItem === 'function') {
+    new TestViewDragAndDrop(context);
+  }
 }

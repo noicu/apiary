@@ -31,6 +31,7 @@ export class SideProvider implements vscode.TreeDataProvider<HistoryItem> {
   readonly onDidChangeTreeData = this._onDidChangeTreeData.event;
 
   getTreeItem(item: HistoryItem) {
+    
     // 工作区文件夹
     vscode.workspace.workspaceFolders?.forEach(folder => {
       vscode.workspace.fs.stat(folder.uri.with({ path: path.join(folder.uri.path, '.apiary') })).then(stat => {
@@ -70,9 +71,26 @@ export class SideProvider implements vscode.TreeDataProvider<HistoryItem> {
   }
 
   getChildren() {
-    return SideProvider.getHistory()
-      .map(item => JSON.parse(item))
-      .sort((a, b) => b.createTime - a.createTime);
+    return [
+      {
+        "name": "csasca0",
+        "method": "GET",
+        "url": "acsasca",
+        "headers": "{\n\"a\":\"1\"\n}",
+        createTime: +new Date(),
+      },
+      {
+        "name": "csasca1",
+        "method": "GET",
+        "url": "acsasca",
+        "headers": "{\n\"a\":\"1\"\n}",
+        createTime: +new Date() + 10,
+        
+      },
+    ] as any;
+    // return SideProvider.getHistory()
+    //   .map(item => JSON.parse(item))
+    //   .sort((a, b) => b.createTime - a.createTime);
   }
 
   static historyKey = 'vscPostman.history';

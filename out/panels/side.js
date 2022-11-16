@@ -61,9 +61,25 @@ class SideProvider {
         return Side;
     }
     getChildren() {
-        return SideProvider.getHistory()
-            .map(item => JSON.parse(item))
-            .sort((a, b) => b.createTime - a.createTime);
+        return [
+            {
+                "name": "csasca0",
+                "method": "GET",
+                "url": "acsasca",
+                "headers": "{\n\"a\":\"1\"\n}",
+                createTime: +new Date(),
+            },
+            {
+                "name": "csasca1",
+                "method": "GET",
+                "url": "acsasca",
+                "headers": "{\n\"a\":\"1\"\n}",
+                createTime: +new Date() + 10,
+            },
+        ];
+        // return SideProvider.getHistory()
+        //   .map(item => JSON.parse(item))
+        //   .sort((a, b) => b.createTime - a.createTime);
     }
     static getHistory() {
         return vscode.workspace.getConfiguration().get(this.historyKey);
