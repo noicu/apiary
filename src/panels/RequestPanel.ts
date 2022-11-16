@@ -35,6 +35,8 @@ export class RequestPanel {
 
     // 接收到webview发来的消息
     this._panel.webview.onDidReceiveMessage((message: Message) => {  
+
+      
       
       if (message.type === 'requestSave') {
         const history = SideProvider.getHistory();

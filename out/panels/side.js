@@ -36,6 +36,22 @@ class SideProvider {
         return SideProvider.instance || (SideProvider.instance = this);
     }
     getTreeItem(item) {
+        var _a;
+        // 工作区文件夹
+        (_a = vscode.workspace.workspaceFolders) === null || _a === void 0 ? void 0 : _a.forEach(folder => {
+            vscode.workspace.fs.stat(folder.uri.with({ path: path.join(folder.uri.path, '.apiary') })).then(stat => {
+                // 存在.apiary才会执行
+                console.log(!!stat);
+                vscode.workspace.fs.writeFile(folder.uri.with({ path: path.join(folder.uri.path, '.apiary', 'postman.json') }), Buffer.from(JSON.stringify(item)));
+            });
+        });
+        // vscode.workspace.findFiles('**/.apiary/**').then((res) => {
+        //   console.log(res,'context');
+        // });
+        // vscode.workspace.workspaceFolders?.forEach((item) => {
+        //   console.log(item,'context');
+        // });
+        console.log(vscode.workspace.fs.writeFile, 'context');
         const Side = new SideItem(item);
         Side.iconPath = {
             light: vscode.Uri.file(path.join(this.context.extensionPath, 'assets', 'request', 'propfind.svg')),

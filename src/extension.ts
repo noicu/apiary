@@ -17,6 +17,7 @@ export function activate(context: ExtensionContext) {
   context.subscriptions.push(commands.registerCommand('vscPostman.new', () => {
     RequestPanel.render(context.extensionUri);
   }));
+
   context.subscriptions.push(commands.registerCommand('vscPostmanHistory.click', handleHistoryItemClick(context)));
   context.subscriptions.push(commands.registerCommand('vscPostmanHistory.newWindow', handleHistoryItemNewWindow(context)));
   context.subscriptions.push(commands.registerCommand('vscPostmanHistory.delete', handleHistoryItemDelete));
