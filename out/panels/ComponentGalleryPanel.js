@@ -108,6 +108,12 @@ class ComponentGalleryPanel {
             "dist",
             "codicon.css",
         ]);
+        const axios = (0, getUri_1.getUri)(webview, extensionUri, [
+            "node_modules",
+            "axios",
+            "dist",
+            "axios.js",
+        ]);
         const mainUri = (0, getUri_1.getUri)(webview, extensionUri, ["webview-ui", "main.js"]);
         const styleUri = (0, getUri_1.getUri)(webview, extensionUri, ["webview-ui", "style.css"]);
         // 提示：安装 es6-string-html VS Code 扩展以启用下面的代码高亮
@@ -118,6 +124,7 @@ class ComponentGalleryPanel {
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <script type="module" src="${toolkitUri}"></script>
+            <script type="module" src="${axios}"></script>
             <script type="module" src="${mainUri}"></script>
             <link rel="stylesheet" href="${styleUri}">
             <link rel="stylesheet" href="${codiconsUri}">

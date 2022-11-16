@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="module" src="${toolkitUri}"></script>
+  <script type="module" src="${axios}"></script>
+  <script type="module" src="${mainUri}"></script>
+  <link rel="stylesheet" href="${styleUri}">
+  <link rel="stylesheet" href="${codiconsUri}">
+  <title>Component Gallery</title>
+</head>
+
+<body>
+  <h1>Request Panel</h1>
+  <div class="flex">
+    <div class="">
+      <vscode-dropdown>
+        <vscode-option>GET</vscode-option>
+        <vscode-option>POST</vscode-option>
+        <vscode-option>PUT</vscode-option>
+      </vscode-dropdown>
+    </div>
+    <div class="flex-1 px">
+      <vscode-text-field class="w-full" type="url"></vscode-text-field>
+    </div>
+    <div class="">
+      <vscode-button appearance="primary" onclick="send">Send</vscode-button>
+    </div>
+  </div>
+  <vscode-divider></vscode-divider>
+  <vscode-panels>
+    <vscode-panel-tab id="tab-1">Parameters</vscode-panel-tab>
+    <vscode-panel-tab id="tab-2">Body</vscode-panel-tab>
+    <vscode-panel-tab id="tab-3">Headers</vscode-panel-tab>
+    <vscode-panel-tab id="tab-4">Authorization</vscode-panel-tab>
+    <vscode-panel-tab id="tab-5">Pre-request Script</vscode-panel-tab>
+    <vscode-panel-tab id="tab-6">Tests</vscode-panel-tab>
+    <vscode-panel-view id="view-1">
+      <vscode-data-grid aria-label="Basic" grid-template-columns="50px">
+        <vscode-data-grid-row row-type="header">
+          <vscode-data-grid-cell cell-type="columnheader" grid-column="1">
+            <vscode-checkbox></vscode-checkbox>
+          </vscode-data-grid-cell>
+          <vscode-data-grid-cell cell-type="columnheader" grid-column="2">Parameter</vscode-data-grid-cell>
+          <vscode-data-grid-cell cell-type="columnheader" grid-column="3">Value</vscode-data-grid-cell>
+          <vscode-data-grid-cell cell-type="columnheader" grid-column="4">Description</vscode-data-grid-cell>
+        </vscode-data-grid-row>
+        <vscode-data-grid-row>
+          <vscode-data-grid-cell grid-column="1">
+            <vscode-checkbox></vscode-checkbox>
+          </vscode-data-grid-cell>
+          <vscode-data-grid-cell grid-column="2">
+            <vscode-text-field class="w-full" type="text" placeholder="Parameter 1"></vscode-text-field>
+          </vscode-data-grid-cell>
+          <vscode-data-grid-cell grid-column="3">
+            <vscode-text-field class="w-full" type="url" placeholder="Value 1"></vscode-text-field>
+          </vscode-data-grid-cell>
+          <vscode-data-grid-cell grid-column="4">
+            <vscode-text-field class="w-full" type="url" placeholder="..."></vscode-text-field>
+          </vscode-data-grid-cell>
+        </vscode-data-grid-row>
+      </vscode-data-grid>
+    </vscode-panel-view>
+    <vscode-panel-view id="view-2">Body</vscode-panel-view>
+    <vscode-panel-view id="view-3">Headers</vscode-panel-view>
+    <vscode-panel-view id="view-4">Authorization</vscode-panel-view>
+    <vscode-panel-view id="view-5">Pre-request Script</vscode-panel-view>
+    <vscode-panel-view id="view-6">Tests</vscode-panel-view>
+  </vscode-panels>
+  <vscode-divider></vscode-divider>
+</body>
+
+</html>

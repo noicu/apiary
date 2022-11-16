@@ -1,5 +1,5 @@
 import { commands, ExtensionContext, window } from "vscode";
-import { ComponentGalleryPanel } from "./panels/ComponentGalleryPanel";
+import { RequestPanel } from "./panels/RequestPanel";
 import { handleHistoryItemClick, handleHistoryItemDelete, handleHistoryItemNewWindow, handleHistoryRefresh, handlePostmanNew } from "./panels/history";
 import { SideProvider } from "./panels/side";
 
@@ -12,10 +12,10 @@ export function activate(context: ExtensionContext) {
   // // Add command to the extension context
   // context.subscriptions.push(showGalleryCommand);
 
-  context.subscriptions.push(window.registerTreeDataProvider('vsc-postman-side', new SideProvider()));
+  context.subscriptions.push(window.registerTreeDataProvider('vsc-postman-side', new SideProvider(context)));
 
   context.subscriptions.push(commands.registerCommand('vscPostman.new', () => {
-    ComponentGalleryPanel.render(context.extensionUri);
+    RequestPanel.render(context.extensionUri);
   }));
   context.subscriptions.push(commands.registerCommand('vscPostmanHistory.click', handleHistoryItemClick(context)));
   context.subscriptions.push(commands.registerCommand('vscPostmanHistory.newWindow', handleHistoryItemNewWindow(context)));

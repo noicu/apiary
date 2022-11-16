@@ -33,8 +33,25 @@
   margin-bottom: 0.5rem;
 }
 
-vscode-data-grid,
+/* vscode-data-grid,
 vscode-panels {
   border: 2px dashed #7b61ff;
   border-radius: 5px;
+} */
+
+.flex {
+  display: flex;
+}
+
+.flex-1 {
+  flex: 1 1 0%;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.px {
+  padding-left: 1rem;
+  padding-right: 1rem;
 }

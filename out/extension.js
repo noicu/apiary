@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.activate = void 0;
 const vscode_1 = require("vscode");
-const ComponentGalleryPanel_1 = require("./panels/ComponentGalleryPanel");
+const RequestPanel_1 = require("./panels/RequestPanel");
 const history_1 = require("./panels/history");
 const side_1 = require("./panels/side");
 function activate(context) {
@@ -12,9 +12,9 @@ function activate(context) {
     // });
     // // Add command to the extension context
     // context.subscriptions.push(showGalleryCommand);
-    context.subscriptions.push(vscode_1.window.registerTreeDataProvider('vsc-postman-side', new side_1.SideProvider()));
+    context.subscriptions.push(vscode_1.window.registerTreeDataProvider('vsc-postman-side', new side_1.SideProvider(context)));
     context.subscriptions.push(vscode_1.commands.registerCommand('vscPostman.new', () => {
-        ComponentGalleryPanel_1.ComponentGalleryPanel.render(context.extensionUri);
+        RequestPanel_1.RequestPanel.render(context.extensionUri);
     }));
     context.subscriptions.push(vscode_1.commands.registerCommand('vscPostmanHistory.click', (0, history_1.handleHistoryItemClick)(context)));
     context.subscriptions.push(vscode_1.commands.registerCommand('vscPostmanHistory.newWindow', (0, history_1.handleHistoryItemNewWindow)(context)));

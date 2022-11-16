@@ -1,17 +1,34 @@
-// Get access to the VS Code API from within the webview context
+// 从 webview 上下文中访问 VS 代码 API
 const vscode = acquireVsCodeApi();
 
-// Just like a regular webpage we need to wait for the webview
-// DOM to load before we can reference any of the HTML elements
-// or toolkit components
+// 就像一个普通的网页一样，我们需要等待 webview
+// 在我们可以引用任何 HTML 元素之前加载 DOM
+// 或工具包组件
 window.addEventListener("load", main);
 
+
 function main() {
-  // Set checkbox indeterminate state
+
+  document.getElementById("send").onclick = function () {
+    console.log(axios);
+    vscode.postMessage({
+      type: 'requestSave',
+      value: JSON.stringify({
+        "name": "csasca",
+        "method": "GET",
+        "url": "acsasca",
+        "headers": "{\n\"a\":\"1\"\n}",
+        createTime: +new Date(),
+      }),
+    });
+  };
+
+
+  // 设置复选框不确定状态
   const checkbox = document.getElementById("basic-checkbox");
   checkbox.indeterminate = true;
 
-  // Define default data grid
+  // 定义默认数据网格
   const defaultDataGrid = document.getElementById("default-grid");
   defaultDataGrid.rowsData = [
     {
@@ -34,7 +51,7 @@ function main() {
     },
   ];
 
-  // Define data grid with custom titles
+  // 使用自定义标题定义数据网格
   const basicDataGridList = document.querySelectorAll(".basic-grid");
   for (const basicDataGrid of basicDataGridList) {
     basicDataGrid.rowsData = [

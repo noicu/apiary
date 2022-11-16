@@ -118,6 +118,13 @@ export class ComponentGalleryPanel {
       "dist",
       "codicon.css",
     ]);
+    const axios = getUri(webview, extensionUri, [
+      "node_modules",
+      "axios",
+      "dist",
+      "axios.js",
+    ]);
+
     const mainUri = getUri(webview, extensionUri, ["webview-ui", "main.js"]);
     const styleUri = getUri(webview, extensionUri, ["webview-ui", "style.css"]);
 
@@ -129,6 +136,7 @@ export class ComponentGalleryPanel {
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <script type="module" src="${toolkitUri}"></script>
+            <script type="module" src="${axios}"></script>
             <script type="module" src="${mainUri}"></script>
             <link rel="stylesheet" href="${styleUri}">
             <link rel="stylesheet" href="${codiconsUri}">

@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SideProvider = exports.SideItem = void 0;
 const vscode = require("vscode");
+const path = require("path");
 class SideItem extends vscode.TreeItem {
     constructor(item) {
         const { method, name, createTime, url } = item;
@@ -28,13 +29,19 @@ class SideItem extends vscode.TreeItem {
 }
 exports.SideItem = SideItem;
 class SideProvider {
-    constructor() {
+    constructor(context) {
         this._onDidChangeTreeData = new vscode.EventEmitter();
         this.onDidChangeTreeData = this._onDidChangeTreeData.event;
+        this.context = context;
         return SideProvider.instance || (SideProvider.instance = this);
     }
     getTreeItem(item) {
-        return new SideItem(item);
+        const Side = new SideItem(item);
+        Side.iconPath = {
+            light: vscode.Uri.file(path.join(this.context.extensionPath, 'assets', 'panelIcon.light.svg')),
+            dark: vscode.Uri.file(path.join(this.context.extensionPath, 'assets', 'panelIcon.dark.svg')),
+        };
+        return Side;
     }
     getChildren() {
         return SideProvider.getHistory()
@@ -54,8 +61,10 @@ class SideProvider {
     }
     static refresh(action) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (action)
+            if (action) {
                 yield action();
+            }
+            ;
             this.instance._onDidChangeTreeData.fire();
         });
     }
