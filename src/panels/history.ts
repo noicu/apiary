@@ -153,3 +153,7 @@ export const handleHistoryItemDelete = ({
 export const handleHistoryRefresh = () => {
   SideProvider.refresh();
 };
+
+export const handleHistoryUpload = () => {
+  vscode.window.showOpenDialog();
+};

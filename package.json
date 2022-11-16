@@ -51,6 +51,11 @@
         "icon": "$(refresh)"
       },
       {
+        "command": "vscPostmanHistory.upload",
+        "title": "Upload",
+        "icon": "$(upload)"
+      },
+      {
         "command": "vscPostmanHistory.newWindow",
         "title": "Open in New Window",
         "icon": "$(link-external)"
@@ -72,6 +77,10 @@
           "command": "vscPostmanHistory.refresh",
           "when": "view == vsc-postman-side",
           "group": "navigation"
+        },
+        {
+          "command": "vscPostmanHistory.upload",
+          "when": "view == vsc-postman-side"
         }
       ],
       "view/item/context": [

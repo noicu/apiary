@@ -6,7 +6,7 @@ export class SideItem extends vscode.TreeItem {
   constructor(item: HistoryItem) {
     const { method, name, createTime, url } = item;
     super({
-      label: `${method[0].toUpperCase()}•${name}`,
+      label: `${name}`,
     });
     this.id = `${createTime}`;
     this.tooltip = `${method} ${url}`;
@@ -35,9 +35,11 @@ export class SideProvider implements vscode.TreeDataProvider<HistoryItem> {
     const Side = new SideItem(item);
 
     Side.iconPath = {
-      light: vscode.Uri.file(path.join(this.context.extensionPath, 'assets', 'panelIcon.light.svg')),
-      dark: vscode.Uri.file(path.join(this.context.extensionPath, 'assets', 'panelIcon.dark.svg')),
+      light: vscode.Uri.file(path.join(this.context.extensionPath, 'assets','request', 'propfind.svg')),
+      dark: vscode.Uri.file(path.join(this.context.extensionPath, 'assets','request', 'propfind.svg')),
     };
+
+    Side.resourceUri = vscode.Uri.file(path.join(this.context.extensionPath, 'assets', 'panelIcon.light.svg'));
 
     return Side;
   }

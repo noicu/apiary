@@ -1,6 +1,6 @@
 import { commands, ExtensionContext, window } from "vscode";
 import { RequestPanel } from "./panels/RequestPanel";
-import { handleHistoryItemClick, handleHistoryItemDelete, handleHistoryItemNewWindow, handleHistoryRefresh, handlePostmanNew } from "./panels/history";
+import { handleHistoryItemClick, handleHistoryItemDelete, handleHistoryItemNewWindow, handleHistoryRefresh, handleHistoryUpload, handlePostmanNew } from "./panels/history";
 import { SideProvider } from "./panels/side";
 
 export function activate(context: ExtensionContext) {
@@ -21,4 +21,5 @@ export function activate(context: ExtensionContext) {
   context.subscriptions.push(commands.registerCommand('vscPostmanHistory.newWindow', handleHistoryItemNewWindow(context)));
   context.subscriptions.push(commands.registerCommand('vscPostmanHistory.delete', handleHistoryItemDelete));
   context.subscriptions.push(commands.registerCommand('vscPostmanHistory.refresh', handleHistoryRefresh));
+  context.subscriptions.push(commands.registerCommand('vscPostmanHistory.upload', handleHistoryUpload));
 }

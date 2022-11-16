@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.handleHistoryRefresh = exports.handleHistoryItemDelete = exports.handleHistoryItemNewWindow = exports.handleHistoryItemClick = exports.handlePostmanNew = void 0;
+exports.handleHistoryUpload = exports.handleHistoryRefresh = exports.handleHistoryItemDelete = exports.handleHistoryItemNewWindow = exports.handleHistoryItemClick = exports.handlePostmanNew = void 0;
 const path = require("path");
 const vscode = require("vscode");
 const side_1 = require("./side");
@@ -135,4 +135,8 @@ const handleHistoryRefresh = () => {
     side_1.SideProvider.refresh();
 };
 exports.handleHistoryRefresh = handleHistoryRefresh;
+const handleHistoryUpload = () => {
+    vscode.window.showOpenDialog();
+};
+exports.handleHistoryUpload = handleHistoryUpload;
 //# sourceMappingURL=history.js.map
