@@ -30,11 +30,12 @@
     "onView:vsc-postman-side",
     "onView:testViewDragAndDrop"
   ],
+  
   "contributes": {
     "configuration": {
       "title": "VscPostman",
       "properties": {
-        "vscPostman.history": {
+        "vscPostman.history1": {
           "type": "array",
           "default": []
         }
@@ -114,7 +115,7 @@
         {
           "icon": "assets/rocket.svg",
           "id": "vsc-postman",
-          "title": "Postman"
+          "title": "模拟请求"
         }
       ]
     },

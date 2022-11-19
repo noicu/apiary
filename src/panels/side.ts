@@ -10,6 +10,9 @@ export class SideItem extends vscode.TreeItem {
     });
     this.id = `${createTime}`;
     this.tooltip = `${method} ${url}`;
+    // this.description = `${createTime}`;
+    this.description = true;
+
     this.command = {
       title: '查看',
       command: 'vscPostmanHistory.click',
@@ -65,7 +68,7 @@ export class SideProvider implements vscode.TreeDataProvider<HistoryItem> {
       dark: vscode.Uri.file(path.join(this.context.extensionPath, 'assets', 'request', 'propfind.svg')),
     };
 
-    Side.resourceUri = vscode.Uri.file(path.join(this.context.extensionPath, 'assets', 'panelIcon.light.svg'));
+    Side.resourceUri =  vscode.Uri.file(path.join(this.context.extensionPath, 'assets', 'request', 'propfind.svg'));
 
     return Side;
   }

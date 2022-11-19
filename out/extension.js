@@ -22,8 +22,8 @@ function activate(context) {
     context.subscriptions.push(vscode_1.commands.registerCommand('vscPostmanHistory.delete', history_1.handleHistoryItemDelete));
     context.subscriptions.push(vscode_1.commands.registerCommand('vscPostmanHistory.refresh', history_1.handleHistoryRefresh));
     context.subscriptions.push(vscode_1.commands.registerCommand('vscPostmanHistory.upload', history_1.handleHistoryUpload));
-    // Drag and Drop proposed API sample
-    // This check is for older versions of VS Code that don't have the most up-to-date tree drag and drop API proposal.
+    // 拖放建议的 API 示例
+    // 此检查适用于没有最新树拖放 API 提案的旧版本 VS Code。
     if (typeof vscode_1.DataTransferItem === 'function') {
         new testViewDragAndDrop_1.TestViewDragAndDrop(context);
     }

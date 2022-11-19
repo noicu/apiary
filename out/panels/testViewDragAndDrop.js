@@ -160,13 +160,15 @@ class TestViewDragAndDrop {
     }
     _getTreeItem(key) {
         const treeElement = this._getTreeElement(key);
-        // An example of how to use codicons in a MarkdownString in a tree item tooltip.
+        // 如何在树项工具提示的 MarkdownString 中使用 codicons 的示例。
         const tooltip = new vscode.MarkdownString(`$(zap) Tooltip for ${key}`, true);
         return {
+            // highlights = 标签中要突出显示的范围。 范围定义为两个数字的元组，其中第一个是包含开始索引，第二个是排他结束索引
             label: /**vscode.TreeItemLabel**/ { label: key, highlights: key.length > 1 ? [[key.length - 2, key.length - 1]] : void 0 },
             tooltip,
             collapsibleState: treeElement && Object.keys(treeElement).length ? vscode.TreeItemCollapsibleState.Collapsed : vscode.TreeItemCollapsibleState.None,
             resourceUri: vscode.Uri.parse(`/tmp/${key}`),
+            description: `123`
         };
     }
     _getTreeElement(element, tree) {
