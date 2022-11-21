@@ -1,5 +1,6 @@
 import { Disposable, Webview, WebviewPanel, window, Uri, ViewColumn } from "vscode";
 import { getUri } from "../utilities/getUri";
+import { methodDropdown } from "./method";
 import { SideProvider } from "./side";
 
 
@@ -154,11 +155,7 @@ export class RequestPanel {
       <h1>Request Panel</h1>
       <div class="flex">
         <div class="">
-          <vscode-dropdown>
-            <vscode-option>GET</vscode-option>
-            <vscode-option>POST</vscode-option>
-            <vscode-option>PUT</vscode-option>
-          </vscode-dropdown>
+          ${methodDropdown}
         </div>
         <div class="flex-1 px">
           <vscode-text-field class="w-full" type="url"></vscode-text-field>

@@ -13,10 +13,10 @@ exports.TestViewDragAndDrop = void 0;
 const vscode = require("vscode");
 class TestViewDragAndDrop {
     constructor(context) {
-        this.dropMimeTypes = ['application/vnd.code.tree.testViewDragAndDrop'];
+        this.dropMimeTypes = ['application/vnd.code.tree.apiaryCollection'];
         this.dragMimeTypes = ['text/uri-list'];
         this._onDidChangeTreeData = new vscode.EventEmitter();
-        // We want to use an array as the event type, but the API for this is currently being finalized. Until it's finalized, use any.
+        // 我们想使用数组作为事件类型，但目前正在最终确定用于此的 API。 在最终确定之前，使用任何。
         this.onDidChangeTreeData = this._onDidChangeTreeData.event;
         this.tree = {
             'a': {
@@ -36,12 +36,12 @@ class TestViewDragAndDrop {
                 'bb': {}
             }
         };
-        // Keep track of any nodes we create so that we can re-use the same objects.
+        // 跟踪我们创建的任何节点，以便我们可以重复使用相同的对象。
         this.nodes = {};
-        const view = vscode.window.createTreeView('testViewDragAndDrop', { treeDataProvider: this, showCollapseAll: true, canSelectMany: true, dragAndDropController: this });
+        const view = vscode.window.createTreeView('apiary-collection', { treeDataProvider: this, showCollapseAll: true, canSelectMany: true, dragAndDropController: this });
         context.subscriptions.push(view);
     }
-    // Tree data provider 
+    // 树数据提供者
     getChildren(element) {
         return this._getChildren(element ? element.key : undefined).map(key => this._getNode(key));
     }
@@ -54,21 +54,21 @@ class TestViewDragAndDrop {
         return this._getParent(element.key);
     }
     dispose() {
-        // nothing to dispose
+        // 没有什么可处理的
     }
-    // Drag and drop controller
+    // 拖放控制器
     handleDrop(target, sources, token) {
         return __awaiter(this, void 0, void 0, function* () {
-            const transferItem = sources.get('application/vnd.code.tree.testViewDragAndDrop');
+            const transferItem = sources.get('application/vnd.code.tree.apiaryCollection');
             if (!transferItem) {
                 return;
             }
             const treeItems = transferItem.value;
             let roots = this._getLocalRoots(treeItems);
-            // Remove nodes that are already target's parent nodes
+            // 删除已经是目标父节点的节点
             roots = roots.filter(r => !this._isChild(this._getTreeElement(r.key), target));
             if (roots.length > 0) {
-                // Reload parents of the moving elements
+                // 重新加载移动元素的父级
                 const parents = roots.map(r => this.getParent(r));
                 roots.forEach(r => this._reparentNode(r, target));
                 this._onDidChangeTreeData.fire([...parents, target]);
@@ -77,10 +77,10 @@ class TestViewDragAndDrop {
     }
     handleDrag(source, treeDataTransfer, token) {
         return __awaiter(this, void 0, void 0, function* () {
-            treeDataTransfer.set('application/vnd.code.tree.testViewDragAndDrop', new vscode.DataTransferItem(source));
+            treeDataTransfer.set('application/vnd.code.tree.apiaryCollection', new vscode.DataTransferItem(source));
         });
     }
-    // Helper methods
+    // 辅助方法
     _isChild(node, child) {
         if (!child) {
             return false;
@@ -98,7 +98,7 @@ class TestViewDragAndDrop {
         }
         return false;
     }
-    // From the given nodes, filter out all nodes who's parent is already in the the array of Nodes.
+    // 从给定的节点中，过滤掉父节点已经在节点数组中的所有节点。
     _getLocalRoots(nodes) {
         const localRoots = [];
         for (let i = 0; i < nodes.length; i++) {
@@ -115,7 +115,7 @@ class TestViewDragAndDrop {
         }
         return localRoots;
     }
-    // Remove node from current position and add node to new target element
+    // 从当前位置移除节点并将节点添加到新的目标元素
     _reparentNode(node, target) {
         const element = {};
         element[node.key] = this._getTreeElement(node.key);
@@ -129,7 +129,7 @@ class TestViewDragAndDrop {
             Object.assign(targetElement, elementCopy);
         }
     }
-    // Remove node from tree
+    // 从树中删除节点
     _removeNode(element, tree) {
         const subTree = tree ? tree : this.tree;
         for (const prop in subTree) {

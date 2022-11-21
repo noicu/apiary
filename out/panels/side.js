@@ -16,7 +16,7 @@ class SideItem extends vscode.TreeItem {
     constructor(item) {
         const { method, name, createTime, url } = item;
         super({
-            label: `${name}`,
+            label: `$(trash) ${name}`,
         });
         this.id = `${createTime}`;
         this.tooltip = `${method} ${url}`;

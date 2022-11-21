@@ -27,8 +27,8 @@
   "main": "./out/extension.js",
   "activationEvents": [
     "onStartupFinished",
-    "onView:vsc-postman-side",
-    "onView:testViewDragAndDrop"
+    "onView:apiary-side",
+    "onView:apiary-collection"
   ],
   
   "contributes": {
@@ -42,6 +42,10 @@
       }
     },
     "commands": [
+      {
+				"command": "extension.startTask",
+				"title": "Show Progress"
+			},
       {
         "command": "vscPostman.new",
         "title": "Add",
@@ -72,41 +76,65 @@
       "view/title": [
         {
           "command": "vscPostman.new",
-          "when": "view == vsc-postman-side",
+          "when": "view == apiary-side",
           "group": "navigation"
         },
         {
           "command": "vscPostmanHistory.refresh",
-          "when": "view == vsc-postman-side",
+          "when": "view == apiary-side",
           "group": "navigation"
         },
         {
           "command": "vscPostmanHistory.upload",
-          "when": "view == vsc-postman-side"
+          "when": "view == apiary-side"
+        },
+        {
+          "command": "vscPostman.new",
+          "when": "view == apiary-collection",
+          "group": "navigation"
+        },
+        {
+          "command": "vscPostmanHistory.refresh",
+          "when": "view == apiary-collection",
+          "group": "navigation"
+        },
+        {
+          "command": "extension.startTask",
+          "when": "view == apiary-collection"
         }
       ],
       "view/item/context": [
         {
           "command": "vscPostmanHistory.newWindow",
-          "when": "view == vsc-postman-side",
+          "when": "view == apiary-side",
           "group": "inline"
         },
         {
           "command": "vscPostmanHistory.delete",
-          "when": "view == vsc-postman-side",
+          "when": "view == apiary-side",
+          "group": "inline"
+        },
+        {
+          "command": "vscPostmanHistory.newWindow",
+          "when": "view == apiary-collection",
+          "group": "inline"
+        },
+        {
+          "command": "vscPostmanHistory.delete",
+          "when": "view == apiary-collection",
           "group": "inline"
         }
       ]
     },
     "views": {
-      "vsc-postman": [
+      "apiary": [
         {
-          "id": "vsc-postman-side",
-          "name": "History"
+          "id": "apiary-side",
+          "name": "历史"
         },
         {
-					"id": "testViewDragAndDrop",
-					"name": "Test View Drag and Drop"
+					"id": "apiary-collection",
+					"name": "集合"
 				}
       ]
     },
@@ -114,15 +142,19 @@
       "activitybar": [
         {
           "icon": "assets/rocket.svg",
-          "id": "vsc-postman",
-          "title": "模拟请求"
+          "id": "apiary",
+          "title": "Apiary"
         }
       ]
     },
     "viewsWelcome": [
       {
-        "view": "vsc-postman-side",
-        "contents": "%view.workbench.postman.disabled%"
+        "view": "apiary-side",
+        "contents": "%apiary.workbench.history.disabled%"
+      },
+      {
+        "view": "apiary-collection",
+        "contents": "%apiary.workbench.collection.disabled%"
       }
     ]
   },

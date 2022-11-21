@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RequestPanel = void 0;
 const vscode_1 = require("vscode");
 const getUri_1 = require("../utilities/getUri");
+const method_1 = require("./method");
 const side_1 = require("./side");
 /**
   * 此类管理 ComponentGallery webview 面板的状态和行为。
@@ -135,11 +136,7 @@ class RequestPanel {
       <h1>Request Panel</h1>
       <div class="flex">
         <div class="">
-          <vscode-dropdown>
-            <vscode-option>GET</vscode-option>
-            <vscode-option>POST</vscode-option>
-            <vscode-option>PUT</vscode-option>
-          </vscode-dropdown>
+          ${method_1.methodDropdown}
         </div>
         <div class="flex-1 px">
           <vscode-text-field class="w-full" type="url"></vscode-text-field>

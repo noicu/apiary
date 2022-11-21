@@ -2,13 +2,13 @@ import * as vscode from 'vscode';
 
 export class TestViewDragAndDrop implements vscode.TreeDataProvider<Node>, vscode.TreeDragAndDropController<Node> {
 
-	dropMimeTypes = ['application/vnd.code.tree.testViewDragAndDrop'];
+	dropMimeTypes = ['application/vnd.code.tree.apiaryCollection'];
 
 	dragMimeTypes = ['text/uri-list'];
 
 	private _onDidChangeTreeData: vscode.EventEmitter<(Node | undefined)[] | undefined> = new vscode.EventEmitter<Node[] | undefined>();
 
-	// We want to use an array as the event type, but the API for this is currently being finalized. Until it's finalized, use any.
+	// 我们想使用数组作为事件类型，但目前正在最终确定用于此的 API。 在最终确定之前，使用任何。
 	public onDidChangeTreeData: vscode.Event<any> = this._onDidChangeTreeData.event;
 
 	public tree: any = {
@@ -32,16 +32,16 @@ export class TestViewDragAndDrop implements vscode.TreeDataProvider<Node>, vscod
 		}
 	};
 
-	// Keep track of any nodes we create so that we can re-use the same objects.
+	// 跟踪我们创建的任何节点，以便我们可以重复使用相同的对象。
 	private nodes: any = {};
 
 	constructor(context: vscode.ExtensionContext) {
 
-		const view = vscode.window.createTreeView('testViewDragAndDrop', { treeDataProvider: this, showCollapseAll: true, canSelectMany: true, dragAndDropController: this });
+		const view = vscode.window.createTreeView('apiary-collection', { treeDataProvider: this, showCollapseAll: true, canSelectMany: true, dragAndDropController: this });
 		context.subscriptions.push(view);
 	}
 
-	// Tree data provider 
+	// 树数据提供者
 
 	public getChildren(element: Node): Node[] {
 		return this._getChildren(element ? element.key : undefined).map(key => this._getNode(key));
@@ -60,14 +60,14 @@ export class TestViewDragAndDrop implements vscode.TreeDataProvider<Node>, vscod
 	}
 
 	dispose(): void {
-		// nothing to dispose
+		// 没有什么可处理的
 	}
 
-	// Drag and drop controller
+	// 拖放控制器
 
 	public async handleDrop(target: Node | undefined, sources: vscode.DataTransfer, token: vscode.CancellationToken): Promise<void> {
 
-		const transferItem = sources.get('application/vnd.code.tree.testViewDragAndDrop');
+		const transferItem = sources.get('application/vnd.code.tree.apiaryCollection');
 
 		if (!transferItem) {
 			return;
@@ -77,11 +77,11 @@ export class TestViewDragAndDrop implements vscode.TreeDataProvider<Node>, vscod
 
 		let roots = this._getLocalRoots(treeItems);
 
-		// Remove nodes that are already target's parent nodes
+		// 删除已经是目标父节点的节点
 		roots = roots.filter(r => !this._isChild(this._getTreeElement(r.key), target));
 		
 		if (roots.length > 0) {
-			// Reload parents of the moving elements
+			// 重新加载移动元素的父级
 			const parents = roots.map(r => this.getParent(r));
 			roots.forEach(r => this._reparentNode(r, target));
 			this._onDidChangeTreeData.fire([...parents, target]);
@@ -89,10 +89,10 @@ export class TestViewDragAndDrop implements vscode.TreeDataProvider<Node>, vscod
 	}
 
 	public async handleDrag(source: Node[], treeDataTransfer: vscode.DataTransfer, token: vscode.CancellationToken): Promise<void> {
-		treeDataTransfer.set('application/vnd.code.tree.testViewDragAndDrop', new vscode.DataTransferItem(source));
+		treeDataTransfer.set('application/vnd.code.tree.apiaryCollection', new vscode.DataTransferItem(source));
 	}
 
-	// Helper methods
+	// 辅助方法
 
 	_isChild(node: Node, child: Node | undefined): boolean {
 		if (!child) {
@@ -111,7 +111,7 @@ export class TestViewDragAndDrop implements vscode.TreeDataProvider<Node>, vscod
 		return false;
 	}
 
-	// From the given nodes, filter out all nodes who's parent is already in the the array of Nodes.
+	// 从给定的节点中，过滤掉父节点已经在节点数组中的所有节点。
 	_getLocalRoots(nodes: Node[]): Node[] {
 		const localRoots = [];
 		for (let i = 0; i < nodes.length; i++) {
@@ -128,7 +128,7 @@ export class TestViewDragAndDrop implements vscode.TreeDataProvider<Node>, vscod
 		return localRoots;
 	}
 
-	// Remove node from current position and add node to new target element
+	// 从当前位置移除节点并将节点添加到新的目标元素
 	_reparentNode(node: Node, target: Node | undefined): void {
 		const element: any = {};
 		element[node.key] = this._getTreeElement(node.key);
@@ -142,7 +142,7 @@ export class TestViewDragAndDrop implements vscode.TreeDataProvider<Node>, vscod
 		}
 	}
 
-	// Remove node from tree
+	// 从树中删除节点
 	_removeNode(element: Node, tree?: any): void {
 		const subTree = tree ? tree : this.tree;
 		for (const prop in subTree) {
