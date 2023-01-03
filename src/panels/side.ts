@@ -1,6 +1,8 @@
 import * as vscode from 'vscode';
 import { ExtensionContext } from 'vscode';
 import * as path from 'path';
+import { createApiaryFile, getApiaryFile, getApiaryFileList, getApiaryPath, initApiaryFolder } from './workspace';
+import { readFile, stat } from '../utilities/fs';
 
 export class SideItem extends vscode.TreeItem {
   constructor(item: HistoryItem) {
@@ -34,15 +36,39 @@ export class SideProvider implements vscode.TreeDataProvider<HistoryItem> {
   readonly onDidChangeTreeData = this._onDidChangeTreeData.event;
 
   getTreeItem(item: HistoryItem) {
-    
-    // 工作区文件夹
-    vscode.workspace.workspaceFolders?.forEach(folder => {
-      vscode.workspace.fs.stat(folder.uri.with({ path: path.join(folder.uri.path, '.apiary') })).then(stat => {
-        // 存在.apiary才会执行
-        console.log(!!stat);
-        vscode.workspace.fs.writeFile(folder.uri.with({ path: path.join(folder.uri.path, '.apiary', 'postman.json') }), Buffer.from(JSON.stringify(item)));
-      });
 
+    // 创建工作区文件夹
+    // 创建项目文件
+    // 更新项目文件
+    // 删除项目文件
+    // 读取项目文件
+
+
+    // 工作区文件夹
+    vscode.workspace.workspaceFolders?.forEach(async (wf) => {
+      // .apiary文件夹路径
+      const APIARY_PATH = getApiaryPath(wf);
+
+      try {
+        // 读取.apiary文件夹下的文件
+        await stat(APIARY_PATH);
+
+        // 读取文件内容
+         const APIARY_DIRECTORY = await getApiaryFileList(wf);
+        for (const uri of APIARY_DIRECTORY) {
+          const file = await getApiaryFile(uri);
+
+          console.log(file.name, 'context');
+        }
+
+      } catch (error) {
+        const item = await vscode.window.showWarningMessage('apiary 工作目录不存在', '创建目录', '取消');
+
+        if (item === '创建目录') {
+          // 初始化工作区文件夹
+          await initApiaryFolder(wf);
+        }
+      }
     });
 
 
@@ -68,7 +94,7 @@ export class SideProvider implements vscode.TreeDataProvider<HistoryItem> {
       dark: vscode.Uri.file(path.join(this.context.extensionPath, 'assets', 'request', 'propfind.svg')),
     };
 
-    Side.resourceUri =  vscode.Uri.file(path.join(this.context.extensionPath, 'assets', 'request', 'propfind.svg'));
+    Side.resourceUri = vscode.Uri.file(path.join(this.context.extensionPath, 'assets', 'request', 'propfind.svg'));
 
     return Side;
   }
@@ -88,7 +114,7 @@ export class SideProvider implements vscode.TreeDataProvider<HistoryItem> {
         "url": "acsasca",
         "headers": "{\n\"a\":\"1\"\n}",
         createTime: +new Date() + 10,
-        
+
       },
     ] as any;
     // return SideProvider.getHistory()

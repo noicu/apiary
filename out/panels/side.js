@@ -12,6 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SideProvider = exports.SideItem = void 0;
 const vscode = require("vscode");
 const path = require("path");
+const workspace_1 = require("./workspace");
+const fs_1 = require("../utilities/fs");
 class SideItem extends vscode.TreeItem {
     constructor(item) {
         const { method, name, createTime, url } = item;
@@ -38,15 +40,34 @@ class SideProvider {
         return SideProvider.instance || (SideProvider.instance = this);
     }
     getTreeItem(item) {
+        // 创建工作区文件夹
+        // 创建项目文件
+        // 更新项目文件
+        // 删除项目文件
+        // 读取项目文件
         var _a;
         // 工作区文件夹
-        (_a = vscode.workspace.workspaceFolders) === null || _a === void 0 ? void 0 : _a.forEach(folder => {
-            vscode.workspace.fs.stat(folder.uri.with({ path: path.join(folder.uri.path, '.apiary') })).then(stat => {
-                // 存在.apiary才会执行
-                console.log(!!stat);
-                vscode.workspace.fs.writeFile(folder.uri.with({ path: path.join(folder.uri.path, '.apiary', 'postman.json') }), Buffer.from(JSON.stringify(item)));
-            });
-        });
+        (_a = vscode.workspace.workspaceFolders) === null || _a === void 0 ? void 0 : _a.forEach((wf) => __awaiter(this, void 0, void 0, function* () {
+            // .apiary文件夹路径
+            const APIARY_PATH = (0, workspace_1.getApiaryPath)(wf);
+            try {
+                // 读取.apiary文件夹下的文件
+                yield (0, fs_1.stat)(APIARY_PATH);
+                // 读取文件内容
+                const APIARY_DIRECTORY = yield (0, workspace_1.getApiaryFileList)(wf);
+                for (const uri of APIARY_DIRECTORY) {
+                    const file = yield (0, workspace_1.getApiaryFile)(uri);
+                    console.log(file.name, 'context');
+                }
+            }
+            catch (error) {
+                const item = yield vscode.window.showWarningMessage('apiary 工作目录不存在', '创建目录', '取消');
+                if (item === '创建目录') {
+                    // 初始化工作区文件夹
+                    yield (0, workspace_1.initApiaryFolder)(wf);
+                }
+            }
+        }));
         // vscode.workspace.findFiles('**/.apiary/**').then((res) => {
         //   console.log(res,'context');
         // });
