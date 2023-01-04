@@ -1,8 +1,6 @@
 import * as vscode from 'vscode';
 import { ExtensionContext } from 'vscode';
 import * as path from 'path';
-import { createApiaryFile, getApiaryFile, getApiaryFileList, getApiaryPath, initApiaryFolder } from './workspace';
-import { readFile, stat } from '../utilities/fs';
 
 export class SideItem extends vscode.TreeItem {
   constructor(item: HistoryItem) {
@@ -45,31 +43,31 @@ export class SideProvider implements vscode.TreeDataProvider<HistoryItem> {
 
 
     // 工作区文件夹
-    vscode.workspace.workspaceFolders?.forEach(async (wf) => {
-      // .apiary文件夹路径
-      const APIARY_PATH = getApiaryPath(wf);
+    // vscode.workspace.workspaceFolders?.forEach(async (wf) => {
+    //   // .apiary文件夹路径
+    //   const APIARY_PATH = getApiaryPath(wf);
 
-      try {
-        // 读取.apiary文件夹下的文件
-        await stat(APIARY_PATH);
+    //   try {
+    //     // 读取.apiary文件夹下的文件
+    //     await stat(APIARY_PATH);
 
-        // 读取文件内容
-         const APIARY_DIRECTORY = await getApiaryFileList(wf);
-        for (const uri of APIARY_DIRECTORY) {
-          const file = await getApiaryFile(uri);
+    //     // 读取文件内容
+    //      const APIARY_DIRECTORY = await getApiaryFileList(wf);
+    //     for (const uri of APIARY_DIRECTORY) {
+    //       const file = await getApiaryFile(uri);
 
-          console.log(file.name, 'context');
-        }
+    //       console.log(file.name, 'context');
+    //     }
 
-      } catch (error) {
-        const item = await vscode.window.showWarningMessage('apiary 工作目录不存在', '创建目录', '取消');
+    //   } catch (error) {
+    //     const item = await vscode.window.showWarningMessage('apiary 工作目录不存在', '创建目录', '取消');
 
-        if (item === '创建目录') {
-          // 初始化工作区文件夹
-          await initApiaryFolder(wf);
-        }
-      }
-    });
+    //     if (item === '创建目录') {
+    //       // 初始化工作区文件夹
+    //       await initApiaryFolder(wf);
+    //     }
+    //   }
+    // });
 
 
 

@@ -1,8 +1,10 @@
 import { commands, DataTransferItem, Disposable, ExtensionContext, ProgressLocation, tasks, window, workspace } from "vscode";
 import { RequestPanel } from "./panels/RequestPanel";
 import { handleHistoryItemClick, handleHistoryItemDelete, handleHistoryItemNewWindow, handleHistoryRefresh, handleHistoryUpload, handlePostmanNew } from "./panels/history";
+
 import { SideProvider } from "./panels/side";
 import { CollectionsView } from "./panels/CollectionsView";
+import { createCollection } from "./commands/collection";
 
 
 
@@ -21,6 +23,8 @@ export function activate(context: ExtensionContext) {
   context.subscriptions.push(commands.registerCommand('vscPostman.new', () => {
     RequestPanel.render(context.extensionUri);
   }));
+
+  context.subscriptions.push(commands.registerCommand('vscPostmanHistory.create', createCollection(context)));
 
   context.subscriptions.push(commands.registerCommand('vscPostmanHistory.click', handleHistoryItemClick(context)));
   context.subscriptions.push(commands.registerCommand('vscPostmanHistory.newWindow', handleHistoryItemNewWindow(context)));

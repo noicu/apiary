@@ -43,6 +43,11 @@
     },
     "commands": [
       {
+				"command": "vscPostmanHistory.create",
+				"title": "创建集合",
+        "icon": "$(add)"
+			},
+      {
 				"command": "extension.startTask",
 				"title": "Show Progress"
 			},
@@ -64,6 +69,11 @@
       {
         "command": "vscPostmanHistory.newWindow",
         "title": "Open in New Window",
+        "icon": "$(link-external)"
+      },
+      {
+        "command": "vscPostmanHistory.rename",
+        "title": "重命名",
         "icon": "$(link-external)"
       },
       {
@@ -89,7 +99,7 @@
           "when": "view == apiary-side"
         },
         {
-          "command": "vscPostman.new",
+          "command": "vscPostmanHistory.create",
           "when": "view == apiary-collection",
           "group": "navigation"
         },
@@ -126,6 +136,10 @@
         },
         {
           "command": "vscPostmanHistory.newWindow",
+          "when": "view == apiary-collection"
+        },
+        {
+          "command": "vscPostmanHistory.rename",
           "when": "view == apiary-collection"
         }
       ]

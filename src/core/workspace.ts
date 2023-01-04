@@ -5,14 +5,13 @@ import { createDirectory, readDirectory, writeFile, del, readFile } from '../uti
 
 export const getApiaryPath = (wf: vscode.WorkspaceFolder, ...arg: string[]) => wf.uri.with({ path: path.join(wf.uri.path, '.apiary', ...arg) });
 
+export const getApiaryCollectionPath = (wf: vscode.WorkspaceFolder, ...arg: string[]) => getApiaryPath(wf, 'collections', ...arg);
+
 
 /**
  * @description 初始化工作区文件夹
  */
 export const initApiaryFolder = async (wf: vscode.WorkspaceFolder) => {
-  // 工作区文件夹 Uri
-  const uri = wf.uri;
-
   // .apiary文件夹路径
   const APIARY_PATH = getApiaryPath(wf);
 
@@ -33,6 +32,30 @@ export const initApiaryFolder = async (wf: vscode.WorkspaceFolder) => {
   }
 };
 
+/**
+ * @description 初始化工作区合集文件夹
+ */
+export const initApiaryCollectionFolder = async (wf: vscode.WorkspaceFolder) => {
+  // .apiary文件夹路径
+  const APIARY_COLLECTION_PATH = getApiaryCollectionPath(wf);
+
+  try {
+    // 读取.apiary文件夹状态
+    const res = await readDirectory(APIARY_COLLECTION_PATH);
+
+    // 如果文件夹存在，直接返回
+    return res;
+  } catch (error) {
+    // 如果目录异常 则 创建目录
+    await createDirectory(APIARY_COLLECTION_PATH);
+
+    // 读取.apiary文件夹状态
+    const res = await readDirectory(APIARY_COLLECTION_PATH);
+
+    return res;
+  }
+};
+
 
 /**
  * @description 创建项目文件
@@ -47,11 +70,13 @@ export const initApiaryFolder = async (wf: vscode.WorkspaceFolder) => {
  */
 export const createApiaryFile = async (fileName: string, config: ApiaryConfig, wf: vscode.WorkspaceFolder) => {
   // 文件路径
-  const uriPath = getApiaryPath(wf, fileName + '.json');
+  const uriPath = getApiaryCollectionPath(wf, fileName + '.json');
 
   try {
     // 初始化工作区文件夹
     await initApiaryFolder(wf);
+    // 初始化合集文件夹
+    await initApiaryCollectionFolder(wf);
     // 写入文件
     await writeFile(uriPath, Buffer.from(JSON.stringify(config)));
 
@@ -89,7 +114,7 @@ export const updateApiaryFile = async (fileName: string, config: ApiaryConfig, w
  * // true
  */
 export const deleteApiaryFile = async (fileName: string, wf: vscode.WorkspaceFolder) => {
-  const uriPath = getApiaryPath(wf, fileName + '.json');
+  const uriPath = getApiaryCollectionPath(wf, fileName + '.json');
 
   try {
     // 删除文件
@@ -131,9 +156,9 @@ export const getApiaryFile = async (uri: vscode.Uri) => {
 export const getApiaryFileList = async (wf: vscode.WorkspaceFolder) => {
   try {
     // 读取文件夹
-    const res = await readDirectory(getApiaryPath(wf));
+    const res = await readDirectory(getApiaryCollectionPath(wf));
 
-    return res.map(([name]) => getApiaryPath(wf, name));
+    return res.map(([name]) => getApiaryCollectionPath(wf, name));
 
   } catch (error) {
     console.log(error);

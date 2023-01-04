@@ -6,6 +6,7 @@ const RequestPanel_1 = require("./panels/RequestPanel");
 const history_1 = require("./panels/history");
 const side_1 = require("./panels/side");
 const CollectionsView_1 = require("./panels/CollectionsView");
+const collection_1 = require("./commands/collection");
 function activate(context) {
     // // Create the show gallery command
     // const showGalleryCommand = commands.registerCommand("component-gallery.showGallery", () => {
@@ -17,6 +18,7 @@ function activate(context) {
     context.subscriptions.push(vscode_1.commands.registerCommand('vscPostman.new', () => {
         RequestPanel_1.RequestPanel.render(context.extensionUri);
     }));
+    context.subscriptions.push(vscode_1.commands.registerCommand('vscPostmanHistory.create', (0, collection_1.createCollection)(context)));
     context.subscriptions.push(vscode_1.commands.registerCommand('vscPostmanHistory.click', (0, history_1.handleHistoryItemClick)(context)));
     context.subscriptions.push(vscode_1.commands.registerCommand('vscPostmanHistory.newWindow', (0, history_1.handleHistoryItemNewWindow)(context)));
     context.subscriptions.push(vscode_1.commands.registerCommand('vscPostmanHistory.delete', history_1.handleHistoryItemDelete));
