@@ -2,7 +2,7 @@ import { commands, DataTransferItem, Disposable, ExtensionContext, ProgressLocat
 import { RequestPanel } from "./panels/RequestPanel";
 import { handleHistoryItemClick, handleHistoryItemDelete, handleHistoryItemNewWindow, handleHistoryRefresh, handleHistoryUpload, handlePostmanNew } from "./panels/history";
 import { SideProvider } from "./panels/side";
-import { TestViewDragAndDrop } from "./panels/testViewDragAndDrop";
+import { CollectionsView } from "./panels/CollectionsView";
 
 
 
@@ -31,7 +31,7 @@ export function activate(context: ExtensionContext) {
   // 拖放建议的 API 示例
   // 此检查适用于没有最新树拖放 API 提案的旧版本 VS Code。
   if (typeof DataTransferItem === 'function') {
-    new TestViewDragAndDrop(context);
+    new CollectionsView(context);
   }
 
   const workspaceRoot = (workspace.workspaceFolders && (workspace.workspaceFolders.length > 0))

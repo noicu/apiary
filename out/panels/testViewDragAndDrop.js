@@ -56,7 +56,7 @@ class TestViewDragAndDrop {
     dispose() {
         // 没有什么可处理的
     }
-    // 拖放控制器
+    // 放置控制器
     handleDrop(target, sources, token) {
         return __awaiter(this, void 0, void 0, function* () {
             const transferItem = sources.get('application/vnd.code.tree.apiaryCollection');
@@ -75,6 +75,7 @@ class TestViewDragAndDrop {
             }
         });
     }
+    // 拖动控制器
     handleDrag(source, treeDataTransfer, token) {
         return __awaiter(this, void 0, void 0, function* () {
             treeDataTransfer.set('application/vnd.code.tree.apiaryCollection', new vscode.DataTransferItem(source));

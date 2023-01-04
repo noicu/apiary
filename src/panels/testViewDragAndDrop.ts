@@ -63,8 +63,7 @@ export class TestViewDragAndDrop implements vscode.TreeDataProvider<Node>, vscod
 		// 没有什么可处理的
 	}
 
-	// 拖放控制器
-
+	// 放置控制器
 	public async handleDrop(target: Node | undefined, sources: vscode.DataTransfer, token: vscode.CancellationToken): Promise<void> {
 
 		const transferItem = sources.get('application/vnd.code.tree.apiaryCollection');
@@ -88,12 +87,12 @@ export class TestViewDragAndDrop implements vscode.TreeDataProvider<Node>, vscod
 		}
 	}
 
+	// 拖动控制器
 	public async handleDrag(source: Node[], treeDataTransfer: vscode.DataTransfer, token: vscode.CancellationToken): Promise<void> {
 		treeDataTransfer.set('application/vnd.code.tree.apiaryCollection', new vscode.DataTransferItem(source));
 	}
 
 	// 辅助方法
-
 	_isChild(node: Node, child: Node | undefined): boolean {
 		if (!child) {
 			return false;

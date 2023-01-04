@@ -123,6 +123,10 @@
           "command": "vscPostmanHistory.delete",
           "when": "view == apiary-collection",
           "group": "inline"
+        },
+        {
+          "command": "vscPostmanHistory.newWindow",
+          "when": "view == apiary-collection"
         }
       ]
     },

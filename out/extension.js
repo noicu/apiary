@@ -5,7 +5,7 @@ const vscode_1 = require("vscode");
 const RequestPanel_1 = require("./panels/RequestPanel");
 const history_1 = require("./panels/history");
 const side_1 = require("./panels/side");
-const testViewDragAndDrop_1 = require("./panels/testViewDragAndDrop");
+const CollectionsView_1 = require("./panels/CollectionsView");
 function activate(context) {
     // // Create the show gallery command
     // const showGalleryCommand = commands.registerCommand("component-gallery.showGallery", () => {
@@ -25,7 +25,7 @@ function activate(context) {
     // 拖放建议的 API 示例
     // 此检查适用于没有最新树拖放 API 提案的旧版本 VS Code。
     if (typeof vscode_1.DataTransferItem === 'function') {
-        new testViewDragAndDrop_1.TestViewDragAndDrop(context);
+        new CollectionsView_1.CollectionsView(context);
     }
     const workspaceRoot = (vscode_1.workspace.workspaceFolders && (vscode_1.workspace.workspaceFolders.length > 0))
         ? vscode_1.workspace.workspaceFolders[0].uri.fsPath : undefined;
