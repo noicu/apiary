@@ -1,7 +1,7 @@
 export function uuid() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-      var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
-      return v.toString(16);
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
   });
 }
 
@@ -12,7 +12,7 @@ export function itemToTree(item: Array<ApiaryGroup | ApiaryRequest>) {
   item.forEach((item) => {
     if ('request' in item) {
       tree.push({
-        _key: item._id || uuid(),
+        _key: uuid(),
         label: item.name,
         type: 'request',
         method: item.request.method,
@@ -21,7 +21,7 @@ export function itemToTree(item: Array<ApiaryGroup | ApiaryRequest>) {
       });
     } else if ('children' in item) {
       tree.push({
-        _key: item._id || uuid(),
+        _key: uuid(),
         label: item.name,
         type: 'group',
         description: item.description,
@@ -36,7 +36,7 @@ export function collectionToTree(collection: ApiaryConfig[]) {
   const tree: ApiaryConfigTree[] = [];
   collection.forEach((item) => {
     tree.push({
-      _key: item._id,
+      _key: uuid(),
       label: item.name,
       type: 'collection',
       children: itemToTree(item.children),

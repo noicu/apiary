@@ -29,7 +29,6 @@ declare interface RequestConfig {
 
 // 请求
 declare interface ApiaryRequest {
-  _id: string;
   name: string;
   description?: string;
   request: RequestConfig
@@ -38,7 +37,6 @@ declare interface ApiaryRequest {
 
 // 组
 declare interface ApiaryGroup {
-  _id: string;
   name: string;
   description?: string;
   children: Array<ApiaryGroup | ApiaryRequest>
@@ -46,7 +44,6 @@ declare interface ApiaryGroup {
 
 // 配置
 declare interface ApiaryConfig {
-  _id: string;
   name: string;
   description?: string;
   children: Array<ApiaryGroup | ApiaryRequest>
@@ -55,7 +52,7 @@ declare interface ApiaryConfig {
 declare interface ApiaryConfigTree {
   _key: string;
   label: string;
-  type: 'group' | 'request' | 'collection';
+  type: 'group' | 'request' | 'collection' | 'workspace';
   method?: string;
   description?: string;
   children: ApiaryConfigTree[];

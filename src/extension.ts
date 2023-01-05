@@ -5,20 +5,20 @@ import { handleHistoryItemClick, handleHistoryItemDelete, handleHistoryItemNewWi
 import { SideProvider } from "./panels/side";
 import { CollectionsView } from "./panels/CollectionsView";
 import { createCollection } from "./commands/collection";
-
-
+import { ResultViewProvider } from "./panels/ResultViewProvider";
 
 
 export function activate(context: ExtensionContext) {
-  // // Create the show gallery command
-  // const showGalleryCommand = commands.registerCommand("component-gallery.showGallery", () => {
-  //   ComponentGalleryPanel.render(context.extensionUri);
-  // });
+  context.subscriptions.push(window.registerTreeDataProvider('apiary-history', new SideProvider(context)));
+  context.subscriptions.push(window.registerTreeDataProvider('apiary-variable', new SideProvider(context)));
 
-  // // Add command to the extension context
-  // context.subscriptions.push(showGalleryCommand);
+  context.subscriptions.push(window.registerTreeDataProvider('task-view', new SideProvider(context)));
 
-  context.subscriptions.push(window.registerTreeDataProvider('apiary-side', new SideProvider(context)));
+  
+
+  const provider = new ResultViewProvider(context.extensionUri);
+
+  context.subscriptions.push(window.registerWebviewViewProvider(ResultViewProvider.viewType, provider));
 
   context.subscriptions.push(commands.registerCommand('vscPostman.new', () => {
     RequestPanel.render(context.extensionUri);

@@ -119,11 +119,9 @@ export const handlePostmanNew = (context: vscode.ExtensionContext) => () => {
 export const handleHistoryItemClick = (context: vscode.ExtensionContext) => {
   let currentPanel: vscode.WebviewPanel | undefined;
   return (item: HistoryItem) => {
-    if (currentPanel)
-      {currentPanel.reveal();}
+    if (currentPanel) { currentPanel.reveal(); }
 
-    else
-      {currentPanel = createWebviewPanel(context);};
+    else { currentPanel = createWebviewPanel(context); };
 
     currentPanel.title = item.name;
     currentPanel.webview.postMessage(item);
@@ -138,7 +136,7 @@ export const handleHistoryItemClick = (context: vscode.ExtensionContext) => {
 };
 
 export const handleHistoryItemNewWindow = (
-  context: vscode.ExtensionContext,
+context: vscode.ExtensionContext,
 ) => (item: HistoryItem) => {
   const currentPanel = createWebviewPanel(context);
   currentPanel.title = item.name;

@@ -27,8 +27,11 @@
   "main": "./out/extension.js",
   "activationEvents": [
     "onStartupFinished",
-    "onView:apiary-side",
-    "onView:apiary-collection"
+    "onView:apiary-history",
+    "onView:apiary-collection",
+    "onView:apiary-variable",
+    "onView:task-view",
+    "onView:result-view"
   ],
   
   "contributes": {
@@ -68,7 +71,7 @@
       },
       {
         "command": "vscPostmanHistory.newWindow",
-        "title": "Open in New Window",
+        "title": "打开窗口",
         "icon": "$(link-external)"
       },
       {
@@ -78,25 +81,30 @@
       },
       {
         "command": "vscPostmanHistory.delete",
-        "title": "Delete",
+        "title": "删除",
         "icon": "$(trash)"
+      },
+      {
+        "command": "vscPostmanHistory.test",
+        "title": "执行",
+        "icon": "$(debug-start)"
       }
     ],
     "menus": {
       "view/title": [
         {
           "command": "vscPostman.new",
-          "when": "view == apiary-side",
+          "when": "view == apiary-history",
           "group": "navigation"
         },
         {
           "command": "vscPostmanHistory.refresh",
-          "when": "view == apiary-side",
+          "when": "view == apiary-history",
           "group": "navigation"
         },
         {
           "command": "vscPostmanHistory.upload",
-          "when": "view == apiary-side"
+          "when": "view == apiary-history"
         },
         {
           "command": "vscPostmanHistory.create",
@@ -116,44 +124,64 @@
       "view/item/context": [
         {
           "command": "vscPostmanHistory.newWindow",
-          "when": "view == apiary-side",
+          "when": "view == apiary-history",
           "group": "inline"
         },
         {
           "command": "vscPostmanHistory.delete",
-          "when": "view == apiary-side",
+          "when": "view == apiary-history",
           "group": "inline"
         },
         {
-          "command": "vscPostmanHistory.newWindow",
-          "when": "view == apiary-collection",
-          "group": "inline"
-        },
-        {
-          "command": "vscPostmanHistory.delete",
+          "command": "vscPostmanHistory.test",
           "when": "view == apiary-collection",
           "group": "inline"
         },
         {
           "command": "vscPostmanHistory.newWindow",
-          "when": "view == apiary-collection"
+          "when": "view == apiary-collection && viewItem =~ /^request:/ ",
+          "group": "inline"
+        },
+        {
+          "command": "vscPostmanHistory.newWindow",
+          "when": "view == apiary-collection && viewItem =~ /^request:/ "
         },
         {
           "command": "vscPostmanHistory.rename",
-          "when": "view == apiary-collection"
+          "when": "view == apiary-collection && viewItem != workspace"
+        },
+        {
+          "command": "vscPostmanHistory.delete",
+          "when": "view == apiary-collection && viewItem != workspace"
         }
       ]
     },
     "views": {
       "apiary": [
         {
-          "id": "apiary-side",
+          "id": "apiary-history",
           "name": "历史"
         },
         {
 					"id": "apiary-collection",
 					"name": "集合"
+				},
+        {
+					"id": "apiary-variable",
+					"name": "变量"
 				}
+      ],
+      "result": [
+        {
+          "type": "tree",
+          "id": "task-view",
+          "name": "任务列表"
+        },
+        {
+          "type": "webview",
+          "id": "result-view",
+          "name": "执行结果"
+        }
       ]
     },
     "viewsContainers": {
@@ -163,11 +191,18 @@
           "id": "apiary",
           "title": "Apiary"
         }
+      ],
+      "panel": [
+        {
+          "id": "result",
+          "title": "请求结果",
+          "icon": "assets/rocket.svg"
+        }
       ]
     },
     "viewsWelcome": [
       {
-        "view": "apiary-side",
+        "view": "apiary-history",
         "contents": "%apiary.workbench.history.disabled%"
       },
       {

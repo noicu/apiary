@@ -16,6 +16,8 @@ export class CollectionsView implements vscode.TreeDataProvider<ApiaryConfigTree
 
   constructor(context: vscode.ExtensionContext) {
     this.context = context;
+
+    vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100).show();
     // 创建视图
     const view = vscode.window.createTreeView(
       'apiary-collection',
@@ -89,27 +91,35 @@ export class CollectionsView implements vscode.TreeDataProvider<ApiaryConfigTree
 
     let iconPath;
 
-    if (element.type === 'collection') {
-      iconPath = {
-        light: vscode.Uri.file(path.join(this.context.extensionPath, 'assets', 'beehive.svg')),
-        dark: vscode.Uri.file(path.join(this.context.extensionPath, 'assets', 'beehive.svg')),
-      };
-    } else if (element.type === 'group') {
-      iconPath = undefined;
-    } else if (element.type === 'request' &&  element.method) {
-      iconPath = {
-        light: vscode.Uri.file(path.join(this.context.extensionPath, 'assets', 'request', element.method.toLowerCase() + '.svg')),
-        dark: vscode.Uri.file(path.join(this.context.extensionPath, 'assets', 'request', element.method.toLowerCase() + '.svg')),
-      };
+    switch (element.type) {
+      case 'collection':
+        iconPath = new vscode.ThemeIcon('repo');
+        break;
+      case 'group':
+        iconPath = undefined;
+        break;
+      case 'workspace':
+        iconPath = new vscode.ThemeIcon('root-folder');
+        break;
+      case 'request':
+        if (element.method) {
+          iconPath = {
+            light: vscode.Uri.file(path.join(this.context.extensionPath, 'assets', 'request', element.method.toLowerCase() + '.svg')),
+            dark: vscode.Uri.file(path.join(this.context.extensionPath, 'assets', 'request', element.method.toLowerCase() + '.svg')),
+          };
+        }
+        break;
     }
+
     return {
       id: element._key,
       label: element.label,
       tooltip,
       iconPath,
-      collapsibleState: element.children.length || element.type === 'collection' ? vscode.TreeItemCollapsibleState.Collapsed : vscode.TreeItemCollapsibleState.None,
+      collapsibleState: element.children.length || element.type === 'collection' || element.type === 'workspace' ? vscode.TreeItemCollapsibleState.Collapsed : vscode.TreeItemCollapsibleState.None,
       resourceUri: vscode.Uri.parse(`/tmp/${element._key}`),
       description: element.description,
+      contextValue: element.type === 'request' ? `request:${element.method}` : element.type,
       command: element.type === 'request' ? {
         title: '查看',
         command: 'vscPostmanHistory.click',

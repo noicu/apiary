@@ -7,14 +7,13 @@ const history_1 = require("./panels/history");
 const side_1 = require("./panels/side");
 const CollectionsView_1 = require("./panels/CollectionsView");
 const collection_1 = require("./commands/collection");
+const ResultViewProvider_1 = require("./panels/ResultViewProvider");
 function activate(context) {
-    // // Create the show gallery command
-    // const showGalleryCommand = commands.registerCommand("component-gallery.showGallery", () => {
-    //   ComponentGalleryPanel.render(context.extensionUri);
-    // });
-    // // Add command to the extension context
-    // context.subscriptions.push(showGalleryCommand);
-    context.subscriptions.push(vscode_1.window.registerTreeDataProvider('apiary-side', new side_1.SideProvider(context)));
+    context.subscriptions.push(vscode_1.window.registerTreeDataProvider('apiary-history', new side_1.SideProvider(context)));
+    context.subscriptions.push(vscode_1.window.registerTreeDataProvider('apiary-variable', new side_1.SideProvider(context)));
+    context.subscriptions.push(vscode_1.window.registerTreeDataProvider('task-view', new side_1.SideProvider(context)));
+    const provider = new ResultViewProvider_1.ResultViewProvider(context.extensionUri);
+    context.subscriptions.push(vscode_1.window.registerWebviewViewProvider(ResultViewProvider_1.ResultViewProvider.viewType, provider));
     context.subscriptions.push(vscode_1.commands.registerCommand('vscPostman.new', () => {
         RequestPanel_1.RequestPanel.render(context.extensionUri);
     }));
